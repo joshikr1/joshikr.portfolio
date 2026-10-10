@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- 
+<!--
 
 ██╗░░░██╗██╗███╗░░██╗░█████╗░██████╗░
 ██║░░░██║██║████╗░██║██╔══██╗██╔══██╗
@@ -78,7 +78,7 @@ What are you doing here?! you sneaky developer...
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.75rem;
       background: #000;
       border-radius: 8px;
       min-height: 300px;
@@ -118,6 +118,74 @@ What are you doing here?! you sneaky developer...
 
     .project-modal-content h3 { margin-bottom: 0.75rem; }
     .project-modal-content p { line-height: 1.6; white-space: pre-line; }
+
+    /* tile thumbnail + discoverability hint */
+    .project-tile-thumb-wrapper {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: #000;
+    }
+    .project-tile-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .project-tile:hover .project-tile-thumb { transform: scale(1.05); }
+    .project-tile-hint {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* modal gallery dots (auto-hidden for single-image projects) */
+    .gallery-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .gallery-dot.active { background: #fff; }
+
+    /* documentation / PDF links */
+    .project-modal-documents { margin-top: 1.5rem; }
+    .project-modal-documents h4 { margin-bottom: 0.6rem; font-size: 0.95rem; }
+    .document-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .document-link:hover { background: rgba(255, 255, 255, 0.18); }
   </style>
 
 <body class="body has-announcement">
@@ -290,7 +358,7 @@ What are you doing here?! you sneaky developer...
           </div>
         </article>
         <p id="info-para" data-aos="fade-up" data-aos-delay="600">
-          I'm a Mechanical Design Engineer at Bluesat, UNSW's Student Space Society, with experience in CAD, CAM and FEA. 
+          I'm a Mechanical Design Engineer at Bluesat, UNSW's Student Space Society, with experience in CAD, CAM and FEA.
           I love tackling challenging open ended problems in creative and innovative ways!<br />
         </p>
         <div class="contact-btn-div" data-aos="fade-up" data-aos-delay="800">
@@ -321,7 +389,7 @@ What are you doing here?! you sneaky developer...
         </div>
         <!-- contact-btn-div -->
       </div>
-     
+
     </section>
     <!-- landing page ends here -->
     <section class="about-section-container" id="about" data-aos="fade-up">
@@ -410,6 +478,10 @@ What are you doing here?! you sneaky developer...
         </div>
         <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('cubesat')" tabindex="0" role="button" aria-label="View CubeSat Z-axis mechanism project details">
           <div class="project-box project-box2" id="project-box2">
+            <div class="project-tile-thumb-wrapper">
+              <img src="src/jpg/bluesat-zaxis.jpg" alt="CubeSat Z-axis mechanism preview" class="project-tile-thumb" />
+              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+            </div>
             <div class="info-div">
               <article class="ProjectHeading">CubeSat Resin Printer — Z-Axis Mechanism</article>
               <p class="ProjectDescription">
@@ -421,6 +493,10 @@ What are you doing here?! you sneaky developer...
 
         <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('exoskeleton')" tabindex="0" role="button" aria-label="View ATFL ankle exoskeleton project details">
           <div class="project-box project-box2" id="project-box2">
+            <div class="project-tile-thumb-wrapper">
+              <img src="src/webp/atfl-exoskeleton.webp" alt="ATFL ankle exoskeleton preview" class="project-tile-thumb" />
+              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+            </div>
             <div class="info-div">
               <article class="ProjectHeading">ATFL Ankle Exoskeleton</article>
               <p class="ProjectDescription">
@@ -432,6 +508,10 @@ What are you doing here?! you sneaky developer...
 
         <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('rover')" tabindex="0" role="button" aria-label="View autonomous fire-detection rover project details">
           <div class="project-box project-box2" id="project-box2">
+            <div class="project-tile-thumb-wrapper">
+              <img src="src/png/fire-rover.png" alt="Autonomous fire-detection rover preview" class="project-tile-thumb" />
+              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+            </div>
             <div class="info-div">
               <article class="ProjectHeading">Autonomous Fire-Detection Rover</article>
               <p class="ProjectDescription">
@@ -452,9 +532,11 @@ What are you doing here?! you sneaky developer...
           <button class="gallery-nav gallery-next" onclick="galleryNext()" aria-label="Next image">&#8594;</button>
           <div class="gallery-caption" id="modalGalleryCaption"></div>
         </div>
+        <div class="gallery-dots" id="modalGalleryDots"></div>
         <div class="project-modal-content">
           <h3 id="modalProjectTitle"></h3>
           <p id="modalProjectDescription"></p>
+          <div class="project-modal-documents" id="modalProjectDocuments"></div>
         </div>
       </div>
     </div>
@@ -542,6 +624,9 @@ What are you doing here?! you sneaky developer...
         description: "Mechanical design lead for the Z-axis mechanism, Bluesat (UNSW's student satellite society). Designed a dual-lead-screw Z-axis for a micro resin 3D printer payload on a 3U CubeSat/AURC rocket, targeting 50-micrometre accuracy under 30g launch loads. CAD, analysis, and manufacturing are complete and flight testing is underway.",
         images: [
           { src: "src/jpg/bluesat-zaxis.jpg", caption: "Manufactured hardware" }
+        ],
+        documents: [
+          // Add entries like: { title: "Design Report", file: "src/pdf/bluesat-zaxis-report.pdf" }
         ]
       },
       exoskeleton: {
@@ -549,6 +634,9 @@ What are you doing here?! you sneaky developer...
         description: "Designing a wearable exoskeleton boot for ATFL ankle ligament injuries. Two linear actuators actively correct ankle inversion, promoting blood flow to the injury site while mechanically bypassing load off the ligament, addressing a gap in current treatment, where rigid immobilization is shown to slow recovery.",
         images: [
           { src: "src/webp/atfl-exoskeleton.webp", caption: "Design sketch" }
+        ],
+        documents: [
+          // Add entries like: { title: "Literature Review", file: "src/pdf/atfl-lit-review.pdf" }
         ]
       },
       rover: {
@@ -556,6 +644,9 @@ What are you doing here?! you sneaky developer...
         description: "Designing the turret (2 degrees of freedom) for an autonomous rover that detects and extinguishes residential house fires, using temperature sensors, infrared sensors, and a camera.",
         images: [
           { src: "src/png/fire-rover.png", caption: "Turret design sketch" }
+        ],
+        documents: [
+          // Add entries like: { title: "Project Proposal", file: "src/pdf/rover-proposal.pdf" }
         ]
       }
     };
@@ -571,6 +662,7 @@ What are you doing here?! you sneaky developer...
       document.getElementById("modalProjectTitle").textContent = project.title;
       document.getElementById("modalProjectDescription").textContent = project.description;
       updateGalleryImage();
+      renderDocuments(project);
       document.getElementById("projectModalOverlay").classList.add("active");
       document.body.style.overflow = "hidden";
     }
@@ -592,6 +684,43 @@ What are you doing here?! you sneaky developer...
       imgEl.alt = image.caption;
       document.getElementById("modalGalleryCaption").textContent =
         `${image.caption} (${currentImageIndex + 1}/${project.images.length})`;
+      renderDots(project);
+    }
+
+    function renderDots(project) {
+      const dotsEl = document.getElementById("modalGalleryDots");
+      dotsEl.innerHTML = "";
+      if (!project.images || project.images.length <= 1) return;
+      project.images.forEach((img, i) => {
+        const dot = document.createElement("button");
+        dot.className = "gallery-dot" + (i === currentImageIndex ? " active" : "");
+        dot.setAttribute("aria-label", `View image ${i + 1} of ${project.images.length}`);
+        dot.onclick = () => goToImage(i);
+        dotsEl.appendChild(dot);
+      });
+    }
+
+    function goToImage(index) {
+      currentImageIndex = index;
+      updateGalleryImage();
+    }
+
+    function renderDocuments(project) {
+      const docsEl = document.getElementById("modalProjectDocuments");
+      docsEl.innerHTML = "";
+      if (!project.documents || project.documents.length === 0) return;
+      const heading = document.createElement("h4");
+      heading.textContent = "Documentation";
+      docsEl.appendChild(heading);
+      project.documents.forEach((doc) => {
+        const link = document.createElement("a");
+        link.href = doc.file;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "document-link";
+        link.textContent = "📄 " + doc.title;
+        docsEl.appendChild(link);
+      });
     }
 
     function galleryNext() {
