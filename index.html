@@ -26,7 +26,8 @@ What are you doing here?! you sneaky developer...
   <meta property="og:url" content="https://joshikr1.github.io/joshikr.portfolio/" />
   <meta property="og:site_name" content="Kunal Joshi Portfolio" />
   <title>Kunal Joshi | Portfolio</title>
-  <link rel="icon" type="image/x-icon" href="src/png/main-favicon.png" />
+  <!-- custom favicon removed (was the avatar face) — browser will fall back to a blank/default tab icon -->
+  <link rel="icon" href="data:," />
   <!-- aos cdn -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <!-- stylesheet -->
@@ -247,22 +248,33 @@ What are you doing here?! you sneaky developer...
     .gallery-dot.active { background: #fff; }
 
     /* documentation / PDF links */
-    .project-modal-documents { margin-top: 1.5rem; }
-    .project-modal-documents h4 { margin-bottom: 0.6rem; font-size: 0.95rem; }
-    .document-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255, 255, 255, 0.08);
+    .project-modal-documents { margin-top: 1.75rem; }
+    .project-modal-documents h4 {
+      margin-bottom: 0.9rem;
+      font-size: 1.1rem;
       color: #fff;
-      padding: 0.5rem 0.9rem;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem;
     }
-    .document-link:hover { background: rgba(255, 255, 255, 0.18); }
+    .document-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 0.9rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      width: fit-content;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .document-link::before { content: "📄"; font-size: 1.3rem; }
+    .document-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
   </style>
 
 <body class="body has-announcement">
@@ -649,7 +661,8 @@ What are you doing here?! you sneaky developer...
         </div>
         <div class="footer-bottom">
           <article>
-            Designed & Built by Kunal Joshi
+            Design & Built by Kunal Joshi
+            &#169; <span id="copyrightYear"></span>
           </article>
         </div>
       </div>
@@ -674,7 +687,7 @@ What are you doing here?! you sneaky developer...
           { src: "src/jpg/bluesat-zaxis.jpg", caption: "Manufactured Z-axis hardware" }
         ],
         documents: [
-          { Title: "Documentation", file: "src/pdf/Z-axis Mechanism Documentation.pdf" }
+          { title: "Documentation", file: "src/pdf/Z-axis Mechanism Documentation.pdf" }
         ]
       },
       exoskeleton: {
@@ -712,6 +725,10 @@ What are you doing here?! you sneaky developer...
         thumb.alt = firstImage.caption || projectsData[id].title;
       }
     });
+
+    // Keep the footer copyright year current automatically.
+    const copyrightYearEl = document.getElementById("copyrightYear");
+    if (copyrightYearEl) copyrightYearEl.textContent = new Date().getFullYear();
 
     let currentProjectId = null;
     let currentImageIndex = 0;
@@ -780,7 +797,10 @@ What are you doing here?! you sneaky developer...
         link.target = "_blank";
         link.rel = "noopener noreferrer";
         link.className = "document-link";
-        link.textContent = "📄 " + doc.title;
+        // Falls back to the filename if `title` is missing/misspelled on an entry,
+        // so a typo shows a readable label instead of the word "undefined".
+        const label = doc.title || (doc.file ? doc.file.split("/").pop() : "View document");
+        link.textContent = label;
         docsEl.appendChild(link);
       });
     }
