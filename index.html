@@ -36,6 +36,9 @@ What are you doing here?! you sneaky developer...
     href="https://fonts.googleapis.com/css2?family=Passions+Conflict&family=Orbitron&family=Fira+Code&family=Six+Caps" />
   <!-- project modal styles -->
   <style>
+    /* nav avatar + "Hey!" greeting removed — center the tabs in the space left behind */
+    .navbar { justify-content: center !important; }
+
     .project-tile { cursor: pointer; }
 
     .project-modal-overlay {
@@ -119,36 +122,83 @@ What are you doing here?! you sneaky developer...
     .project-modal-content h3 { margin-bottom: 0.75rem; }
     .project-modal-content p { line-height: 1.6; white-space: pre-line; }
 
-    /* tile thumbnail + discoverability hint */
-    .project-tile-thumb-wrapper {
-      position: relative;
+    /* project cards: 50/50 image + text split */
+    .projects-section-div {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .project-card {
+      display: flex;
+      align-items: stretch;
       width: 100%;
-      height: 180px;
-      border-radius: 8px;
+      min-height: 320px;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 1rem;
+    }
+
+    .project-card-media {
+      position: relative;
+      width: 50%;
+      flex-shrink: 0;
       background: #000;
     }
-    .project-tile-thumb {
+
+    .project-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.3s ease;
     }
-    .project-tile:hover .project-tile-thumb { transform: scale(1.05); }
-    .project-tile-hint {
+    .project-tile:hover .project-card-img { transform: scale(1.05); }
+
+    .project-card-hint {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       background: rgba(0, 0, 0, 0.65);
       color: #fff;
-      font-size: 0.8rem;
-      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+      padding: 0.5rem 0.8rem;
       display: flex;
       align-items: center;
       gap: 0.4rem;
+    }
+
+    .project-card-body {
+      width: 50%;
+      box-sizing: border-box;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-wrap: break-word;
+    }
+
+    .project-card-title {
+      font-size: 1.4rem;
+      line-height: 1.3;
+      color: #fff;
+      margin: 0 0 1rem 0;
+    }
+
+    .project-card-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .project-card { flex-direction: column; min-height: unset; }
+      .project-card-media, .project-card-body { width: 100%; }
+      .project-card-media { height: 240px; }
+      .project-card-body { padding: 1.5rem; }
     }
 
     /* modal gallery dots (auto-hidden for single-image projects) */
@@ -200,12 +250,6 @@ What are you doing here?! you sneaky developer...
     <div class="cursor-outer" id="cursor-outer"></div>
 
     <div class="navbar" id="navbar">
-      <div class="hey">Hey!</div>
-      <div class="logo" tabindex="0" aria-label="kunal joshi logo">
-        <div class="logo-top">
-          <img src="src/png/nav-avatar.png" alt="animation-head" id="nav-avatar"/>
-        </div>
-      </div>
       <div class="navbar-tabs" id="navbar-tabs">
         <ul class="navbar-tabs-ul">
           <li class="home activeThistab" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="100">
@@ -358,7 +402,8 @@ What are you doing here?! you sneaky developer...
           </div>
         </article>
         <p id="info-para" data-aos="fade-up" data-aos-delay="600">
-          I'm a Mechanical Design Engineer at Bluesat, UNSW's Student Space Society, with experience in CAD, CAM and FEA.
+          I'm currently on exchange at UC Berkeley as a Mechanical Engineering Student and am taking Robotic Locomotion, Mechatronics Design, Fluid Mechanics and a NewSpace Decal while being a technical consultant for Sophia Space!
+          At home I am a Mechanical Design Engineer at Bluesat, UNSW's Student Space Society, with experience in CAD, CAM and FEA.
           I love tackling challenging open ended problems in creative and innovative ways!<br />
         </p>
         <div class="contact-btn-div" data-aos="fade-up" data-aos-delay="800">
@@ -476,45 +521,45 @@ What are you doing here?! you sneaky developer...
           </h2>
           <p class="sectionHeadingP"></p>
         </div>
-        <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('cubesat')" tabindex="0" role="button" aria-label="View CubeSat Z-axis mechanism project details">
-          <div class="project-box project-box2" id="project-box2">
-            <div class="project-tile-thumb-wrapper">
-              <img src="src/jpg/bluesat-zaxis.jpg" alt="CubeSat Z-axis mechanism preview" class="project-tile-thumb" />
-              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+        <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('cubesat')" tabindex="0" role="button" aria-label="View CubeSat Z-axis mechanism project details">
+          <div class="project-card">
+            <div class="project-card-media">
+              <img src="src/jpg/bluesat-zaxis.jpg" alt="CubeSat Z-axis mechanism preview" class="project-card-img" id="thumb-cubesat" />
+              <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
-            <div class="info-div">
-              <article class="ProjectHeading">CubeSat Resin Printer — Z-Axis Mechanism</article>
-              <p class="ProjectDescription">
+            <div class="project-card-body">
+              <h3 class="project-card-title">CubeSat Resin Printer — Z-Axis Mechanism</h3>
+              <p class="project-card-desc">
                 Mechanical design lead for the Z-axis mechanism, Bluesat (UNSW's student satellite society). Designed a dual-lead-screw Z-axis for a micro resin 3D printer payload on a 3U CubeSat/AURC rocket, targeting 50-micrometre accuracy under 30g launch loads. CAD, analysis, and manufacturing are complete and flight testing is underway.
               </p>
             </div>
           </div>
         </div>
 
-        <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('exoskeleton')" tabindex="0" role="button" aria-label="View ATFL ankle exoskeleton project details">
-          <div class="project-box project-box2" id="project-box2">
-            <div class="project-tile-thumb-wrapper">
-              <img src="src/webp/atfl-exoskeleton.webp" alt="ATFL ankle exoskeleton preview" class="project-tile-thumb" />
-              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+        <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('exoskeleton')" tabindex="0" role="button" aria-label="View ATFL ankle exoskeleton project details">
+          <div class="project-card">
+            <div class="project-card-media">
+              <img src="src/webp/atfl-exoskeleton.webp" alt="ATFL ankle exoskeleton preview" class="project-card-img" id="thumb-exoskeleton" />
+              <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
-            <div class="info-div">
-              <article class="ProjectHeading">ATFL Ankle Exoskeleton</article>
-              <p class="ProjectDescription">
+            <div class="project-card-body">
+              <h3 class="project-card-title">ATFL Ankle Exoskeleton</h3>
+              <p class="project-card-desc">
                 Designing a wearable exoskeleton boot for ATFL ankle ligament injuries. Two linear actuators actively correct ankle inversion, promoting blood flow to the injury site while mechanically bypassing load off the ligament, addressing a gap in current treatment, where rigid immobilization is shown to slow recovery.
               </p>
             </div>
           </div>
         </div>
 
-        <div data-aos="fade-up" class="project-box-wrapper project-tile" onclick="openProjectModal('rover')" tabindex="0" role="button" aria-label="View autonomous fire-detection rover project details">
-          <div class="project-box project-box2" id="project-box2">
-            <div class="project-tile-thumb-wrapper">
-              <img src="src/png/fire-rover.png" alt="Autonomous fire-detection rover preview" class="project-tile-thumb" />
-              <div class="project-tile-hint">📂 View gallery &amp; docs</div>
+        <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('rover')" tabindex="0" role="button" aria-label="View autonomous fire-detection rover project details">
+          <div class="project-card">
+            <div class="project-card-media">
+              <img src="src/png/fire-rover.png" alt="Autonomous fire-detection rover preview" class="project-card-img" id="thumb-rover" />
+              <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
-            <div class="info-div">
-              <article class="ProjectHeading">Autonomous Fire-Detection Rover</article>
-              <p class="ProjectDescription">
+            <div class="project-card-body">
+              <h3 class="project-card-title">Autonomous Fire-Detection Rover</h3>
+              <p class="project-card-desc">
                 Designing the turret (2 degrees of freedom) for an autonomous rover that detects and extinguishes residential house fires, using temperature sensors, infrared sensors, and a camera.
               </p>
             </div>
@@ -650,6 +695,17 @@ What are you doing here?! you sneaky developer...
         ]
       }
     };
+
+    // Keep each project tile's preview image in sync with the first photo
+    // in that project's gallery, so there's only one place to edit photos.
+    Object.keys(projectsData).forEach((id) => {
+      const thumb = document.getElementById(`thumb-${id}`);
+      const firstImage = projectsData[id].images && projectsData[id].images[0];
+      if (thumb && firstImage) {
+        thumb.src = firstImage.src;
+        thumb.alt = firstImage.caption || projectsData[id].title;
+      }
+    });
 
     let currentProjectId = null;
     let currentImageIndex = 0;
