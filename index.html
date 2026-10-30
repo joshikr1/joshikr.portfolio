@@ -63,8 +63,11 @@ What are you doing here?! you sneaky developer...
     }
 
     /* --- Wider layout: open up the main content containers on larger
-       screens so the site uses more of the browser width. style.css likely
-       has its own (narrower) max-width on these — these overrides win. --- */
+       screens so the site uses more of the browser width, and so every
+       section (hero included) shares the same left/right edges. style.css
+       likely has its own (narrower, inconsistent) widths on these —
+       these overrides win and bring them all into line. --- */
+    .landing-page-container,
     .about-section-container,
     .projects-section-container {
       max-width: 1400px !important;
@@ -81,6 +84,7 @@ What are you doing here?! you sneaky developer...
       width: 100% !important;
     }
     @media (max-width: 900px) {
+      .landing-page-container,
       .about-section-container,
       .projects-section-container {
         padding-left: 1.25rem !important;
@@ -192,22 +196,23 @@ What are you doing here?! you sneaky developer...
       display: flex;
       align-items: stretch;
       width: 100%;
-      min-height: 320px;
+      /* fixed height (not just a minimum) so a tall/portrait source photo
+         can never inflate the whole card — object-fit: cover on the image
+         crops to fit this exactly, every card is the same size. */
+      height: 340px;
       background: #111;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       overflow: hidden;
     }
 
-    /* in-progress / completed status pill, top-right of the card */
+    /* status pill, top-right of the card — layout only here, color set by
+       the .in-progress / .completed modifier below */
     .project-status-badge {
       position: absolute;
       top: 1rem;
       right: 1rem;
       z-index: 3;
-      background: rgba(52, 211, 153, 0.18);
-      border: 1px solid rgba(52, 211, 153, 0.6);
-      color: #6ee7b7;
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.04em;
@@ -216,10 +221,15 @@ What are you doing here?! you sneaky developer...
       border-radius: 999px;
       backdrop-filter: blur(4px);
     }
+    .project-status-badge.in-progress {
+      background: rgba(251, 191, 36, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.6);
+      color: #fcd34d;
+    }
     .project-status-badge.completed {
-      background: rgba(96, 165, 250, 0.18);
-      border-color: rgba(96, 165, 250, 0.6);
-      color: #93c5fd;
+      background: rgba(52, 211, 153, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.6);
+      color: #6ee7b7;
     }
 
     .project-card-media {
@@ -327,7 +337,7 @@ What are you doing here?! you sneaky developer...
     }
 
     @media (max-width: 768px) {
-      .project-card { flex-direction: column; min-height: unset; }
+      .project-card { flex-direction: column; height: auto; }
       .project-card-media, .project-card-body { width: 100%; }
       .project-card-media { height: 240px; }
       .project-card-body { padding: 1.75rem; }
@@ -382,9 +392,6 @@ What are you doing here?! you sneaky developer...
   </style>
 
 <body class="body has-announcement">
-  <audio loop="" id="audioPlayer" style="display: none">
-    <source src="src/mp3/preloader.mp3" type="audio/mp3" />
-  </audio>
   <div id="preloader"></div>
   <noscript>Allow Javascript</noscript>
 
@@ -548,19 +555,14 @@ What are you doing here?! you sneaky developer...
             <input type="checkbox" id="switchforsetting" onclick="settingtoggle()" />
 
             <label for="switchforsetting" class="needtobeinvert" id="labelforsetting" tabindex="0"
-              aria-label="settings for sound and appearance"></label>
+              aria-label="settings for appearance"></label>
 
             <div class="visualmodetogglebuttoncontainer" id="visualmodetogglebuttoncontainer">
               <input type="checkbox" id="switchforvisualmode" onclick="visualmode()" />
               <label for="switchforvisualmode" id="labelforvisualmode" tabindex="0"
                 aria-label="switch appearance"></label>
             </div>
-
-            <div class="soundtogglebuttoncontainer" id="soundtogglebuttoncontainer">
-              <input type="checkbox" id="switchforsound" onclick="playpause()" />
-              <label for="switchforsound" id="labelforsound" tabindex="0" aria-label="switch sound"
-                class="needtobeinvert"></label>
-            </div>
+            <!-- sound/music toggle removed by request -->
           </div>
           <!-- setting div ends -->
         </div>
@@ -678,6 +680,7 @@ What are you doing here?! you sneaky developer...
               </p>
               <div class="project-card-skills">
                 <span class="skill-chip">SolidWorks</span>
+                <span class="skill-chip">Fluid Mechanics</span>
                 <span class="skill-chip">Computer Vision</span>
                 <span class="skill-chip">Embedded Systems</span>
                 <span class="skill-chip">State Machine Design</span>
