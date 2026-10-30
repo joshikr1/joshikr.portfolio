@@ -62,6 +62,32 @@ What are you doing here?! you sneaky developer...
       .text-content { padding-top: 170px !important; }
     }
 
+    /* --- Wider layout: open up the main content containers on larger
+       screens so the site uses more of the browser width. style.css likely
+       has its own (narrower) max-width on these — these overrides win. --- */
+    .about-section-container,
+    .projects-section-container {
+      max-width: 1400px !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      box-sizing: border-box !important;
+      padding-left: 3rem !important;
+      padding-right: 3rem !important;
+    }
+    .about-section,
+    .projects-section-div {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .about-section-container,
+      .projects-section-container {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+      }
+    }
+
     .project-tile { cursor: pointer; }
 
     .project-modal-overlay {
@@ -145,18 +171,18 @@ What are you doing here?! you sneaky developer...
     .project-modal-content h3 { margin-bottom: 0.75rem; }
     .project-modal-content p { line-height: 1.6; white-space: pre-line; }
 
-    /* project cards: 50/50 image + text split */
+    /* project cards: 50/50 image + text split, now bigger across the board */
     .projects-section-div {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.25rem;
     }
 
     .project-card {
       display: flex;
       align-items: stretch;
       width: 100%;
-      min-height: 320px;
+      min-height: 400px;
       background: #111;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
@@ -196,7 +222,7 @@ What are you doing here?! you sneaky developer...
     .project-card-body {
       width: 50%;
       box-sizing: border-box;
-      padding: 2rem;
+      padding: 2.75rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -204,29 +230,49 @@ What are you doing here?! you sneaky developer...
     }
 
     .project-card-title {
-      font-size: 1.85rem;
-      line-height: 1.3;
+      font-size: 2.1rem;
+      line-height: 1.25;
       color: #fff;
-      margin: 0 0 1.1rem 0;
+      margin: 0 0 1.2rem 0;
     }
 
     .project-card-desc {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       line-height: 1.7;
       color: #ccc;
       margin: 0;
     }
 
+    /* purple skill tags at the bottom of each project card */
+    .project-card-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(139, 92, 246, 0.18);
+      border: 1px solid rgba(139, 92, 246, 0.55);
+      color: #c9b6ff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+    }
+
     @media (max-width: 768px) {
-      .project-card-title { font-size: 1.5rem; }
-      .project-card-desc { font-size: 1rem; }
+      .project-card-title { font-size: 1.6rem; }
+      .project-card-desc { font-size: 1.05rem; }
     }
 
     @media (max-width: 768px) {
       .project-card { flex-direction: column; min-height: unset; }
       .project-card-media, .project-card-body { width: 100%; }
-      .project-card-media { height: 240px; }
-      .project-card-body { padding: 1.5rem; }
+      .project-card-media { height: 260px; }
+      .project-card-body { padding: 1.75rem; }
     }
 
     /* modal gallery dots (auto-hidden for single-image projects) */
@@ -303,12 +349,6 @@ What are you doing here?! you sneaky developer...
             </a>
           </li>
 
-          <li class="skills" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="500">
-            <a href="#skills" aria-label="skills menu button">
-              Skills
-            </a>
-          </li>
-
           <li class="projects" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="700">
             <a href="#projects" aria-label="projects menu button">
               Projects
@@ -344,11 +384,6 @@ What are you doing here?! you sneaky developer...
         <li id="aboutme-mobile-tab" class="mobile-navbar-tabs-li about" onclick="hidemenubyli()">
           <a href="#about" tabindex="0" aria-label="about menu button">
             About Me
-          </a>
-        </li>
-        <li id="skills-mobile-tab" class="mobile-navbar-tabs-li skills" onclick="hidemenubyli()">
-          <a href="#skills" tabindex="0" aria-label="skills menu button">
-            Skills
           </a>
         </li>
         <li id="projects-mobile-tab" class="mobile-navbar-tabs-li projects" onclick="hidemenubyli()">
@@ -488,35 +523,19 @@ What are you doing here?! you sneaky developer...
         <div class="info-dp-section">
           <div class="about-info">
             <p tabindex="0">
-              I am a second year Mechatronics Engineering Student at UNSW, Sydney currently on exchange at UC Berkeley as a Mechatronics Engineer until the end of December.
+              I am a second-year Mechatronics Engineering student at UNSW Sydney, currently on exchange at UC Berkeley studying Robotic Locomotion under Professor Homayoon Kazerooni, Mechatronics Design under Professor Hannah Stuart and Fluid Mechanics under Professor Shawn Shadden.
             </p>
             <br />
             <p tabindex="0">
-              Taking advantage of UC Berkeley's exceptional robotics and engineering programs I am taking Robotic Locomotion with Professor Homayoon Kazerooni, Mechatronics Design with Professor Hannah Stuart and Fluid Mechanics with Professor Shawn Shadden.
+              Recently promoted to Mechanical Lead at Bluesat, UNSW's Student Space Society, after teaching myself lead screw mechanics and gear ratios from scratch to design the Z-axis mechanism of a micro resin 3D printer CubeSat payload. I'm now leading a team delivering two 2U CubeSats for the Australian Universities Rocketry Competition and the International Rocketry Engineering Competition.
             </p>
             <br />
             <p tabindex="0">
-              In Robotic Locomotion I applying kinematic and dynamic analysis of humanoid systems to design a wearable ankle exoskeleton with a group of masters Engineers. In one term we aim to create a CAD Design, feedback controls and engineering analysis to help treat ankle ligament complex injuries while minimising the impact on the natural human gait cycle. I am doing this in a group of five with three masters students and a senior.
+              Outside coursework, I was a Track Winner at the Cambridge EduX Hackathon and placed top 50 globally at Microsoft's AI for Good Hackathon. Right now I'm designing a prosthetic thumb for my grandfather, the most personal engineering project I've taken on. I also mentor high school Maths and Physics students and train new tutors.
             </p>
             <br />
             <p tabindex="0">
-              Trying to tackle residential fires, I am designing an autonomous rover in a team of five undergrad engineers to detect and extinguish fires. I am leading the design of the water delivery system and the programming of the system.
-            </p>
-            <br />
-            <p tabindex="0">
-              Back home I have also been promoted to Mechanical Lead at Bluesat, UNSW's Student Space Society where I previously led the design and development of the Z axis Mechanism for a micro resin 3D printer to operate while on a rocket. I taught myself lead screw mechanics and gear ratios from scratch to lead the Z-axis design of a micro resin 3D printer using Onshape and Fusion 360 for CAM. I am now excited to lead a group of talented Mechanical Engineers to deliver two 2U form factor Cubesats for the Australian Universities Rocketry Competition (AURC) and the International Rocketry Engineering Competition (IREC).
-            </p>
-            <br />         
-            <p tabindex="0">
-              I gravitate toward projects that force me to learn fast: I was a Track Winner at the Cambridge EduX Hackathon, and placed in the top 50 globally at Microsoft's AI for Good Hackathon, devising an AI system to speed up emergency response times. Right now I'm designing a prosthetic thumb for my grandfather, the most personal engineering project I've taken on.
-            </p>
-            <br />
-            <p tabindex="0">
-              I also mentor high school Maths and Physics students and train new tutors, which keeps me sharp at explaining technical ideas clearly, something I bring into every engineering team I'm part of.
-            </p>
-            <br/>
-            <p tabindex="0">
-              I'm currently looking for robotics/mechatronics internship opportunities to build on this experience and would love to have a chat!
+              I'm looking for robotics/mechatronics internship opportunities to build on this experience, and would love to connect!
             </p>
              <!-- Resume button -->
           </div>
@@ -529,45 +548,6 @@ What are you doing here?! you sneaky developer...
     </section>
     <!-- about section ends  -->
 
-    <section class="skills-section-container" id="skills">
-      <div class="skills-section">
-        <div class="section-heading" data-aos="fade-up">
-          <h2 class="section-heading-article" tabindex="0" aria-label="skills heading">
-            Skills
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-
-        <div class="frontend-dev-section">
-          <h3 class="frontend-dev-heading" data-aos="fade-up" tabindex="0"
-            aria-label="The software I have experience with as a Mechatronics Engineering Student">
-            Tech Stack
-          </h3>
-          <ul class="tech-stack-wrapper">
-            <li class="tech-stack-box" data-aos="fade-up">
-              <img src="./src/png/onshape.png" alt="Onshape skill" class="tech-stack-logo" />
-              <span class="tooltip">ONSHAPE</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <img src="./src/png/solidworks.png" alt="SolidWorks skill" class="tech-stack-logo" />
-              <span class="tooltip">SOLIDWORKS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <img src="./src/png/fusion360.png" alt="Fusion 360 skill" class="tech-stack-logo" />
-              <span class="tooltip">FUSION 360</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <img src="./src/png/ansys.png" alt="Ansys skill" class="tech-stack-logo" />
-              <span class="tooltip">ANSYS</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <!-- skills section ends -->
     <section class="projects-section-container" id="projects">
       <div class="projects-section-div">
         <div class="section-heading" data-aos="fade-up">
@@ -587,6 +567,12 @@ What are you doing here?! you sneaky developer...
               <p class="project-card-desc">
                 Mechanical design lead for the Z-axis mechanism, Bluesat (UNSW's student satellite society). Designed a dual-lead-screw Z-axis for a micro resin 3D printer payload on a 3U CubeSat/AURC rocket, targeting 50-micrometre accuracy under 30g launch loads. CAD, analysis, and manufacturing are complete and flight testing is underway.
               </p>
+              <div class="project-card-skills">
+                <span class="skill-chip">Onshape</span>
+                <span class="skill-chip">Fusion 360 CAM</span>
+                <span class="skill-chip">GD&amp;T</span>
+                <span class="skill-chip">Lead Screw Design</span>
+              </div>
             </div>
           </div>
         </div>
@@ -602,6 +588,12 @@ What are you doing here?! you sneaky developer...
               <p class="project-card-desc">
                 Designing a wearable exoskeleton boot for ankle ligament injuries while minimising the impedance on the natural human gait cycle. I am working on the kinematic and dynamic analysis of our design for motor selection.
               </p>
+              <div class="project-card-skills">
+                <span class="skill-chip">Kinematics</span>
+                <span class="skill-chip">Dynamics</span>
+                <span class="skill-chip">Actuator Selection</span>
+                <span class="skill-chip">Biomechanics</span>
+              </div>
             </div>
           </div>
         </div>
@@ -617,6 +609,13 @@ What are you doing here?! you sneaky developer...
               <p class="project-card-desc">
                 Designing the turret for an autonomous rover that detects and extinguishes residential house fires, using an AI camera and ultrasonic sensors. I am now starting the programming for the rover.
               </p>
+              <div class="project-card-skills">
+                <span class="skill-chip">SolidWorks</span>
+                <span class="skill-chip">Computer Vision</span>
+                <span class="skill-chip">Embedded Systems</span>
+                <span class="skill-chip">State Machine Design</span>
+                <span class="skill-chip">Sensor Integration</span>
+              </div>
             </div>
           </div>
         </div>
