@@ -113,6 +113,15 @@ What are you doing here?! you sneaky developer...
       padding: 2rem;
     }
 
+    /* "magnification" pop-in effect when a project card is opened */
+    .project-modal-overlay.active .project-modal {
+      animation: modalPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes modalPopIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     .project-modal-close {
       position: absolute;
       top: 1rem;
@@ -171,22 +180,46 @@ What are you doing here?! you sneaky developer...
     .project-modal-content h3 { margin-bottom: 0.75rem; }
     .project-modal-content p { line-height: 1.6; white-space: pre-line; }
 
-    /* project cards: 50/50 image + text split, now bigger across the board */
+    /* project cards: 50/50 image + text split */
     .projects-section-div {
       display: flex;
       flex-direction: column;
-      gap: 2.25rem;
+      gap: 2rem;
     }
 
     .project-card {
+      position: relative;
       display: flex;
       align-items: stretch;
       width: 100%;
-      min-height: 400px;
+      min-height: 320px;
       background: #111;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       overflow: hidden;
+    }
+
+    /* in-progress / completed status pill, top-right of the card */
+    .project-status-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 3;
+      background: rgba(52, 211, 153, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.6);
+      color: #6ee7b7;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+    .project-status-badge.completed {
+      background: rgba(96, 165, 250, 0.18);
+      border-color: rgba(96, 165, 250, 0.6);
+      color: #93c5fd;
     }
 
     .project-card-media {
@@ -205,6 +238,30 @@ What are you doing here?! you sneaky developer...
     }
     .project-tile:hover .project-card-img { transform: scale(1.05); }
 
+    /* always-visible nav arrows on the card itself — a clear visual cue
+       that there's more to see, and clicking either one opens the modal */
+    .card-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .card-nav:hover { background: rgba(0, 0, 0, 0.8); transform: translateY(-50%) scale(1.08); }
+    .card-nav-prev { left: 12px; }
+    .card-nav-next { right: 12px; }
+
     .project-card-hint {
       position: absolute;
       bottom: 0;
@@ -212,8 +269,8 @@ What are you doing here?! you sneaky developer...
       right: 0;
       background: rgba(0, 0, 0, 0.65);
       color: #fff;
-      font-size: 0.85rem;
-      padding: 0.5rem 0.8rem;
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
       display: flex;
       align-items: center;
       gap: 0.4rem;
@@ -222,7 +279,7 @@ What are you doing here?! you sneaky developer...
     .project-card-body {
       width: 50%;
       box-sizing: border-box;
-      padding: 2.75rem;
+      padding: 2.25rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -230,15 +287,15 @@ What are you doing here?! you sneaky developer...
     }
 
     .project-card-title {
-      font-size: 2.1rem;
-      line-height: 1.25;
+      font-size: 2.4rem;
+      line-height: 1.2;
       color: #fff;
-      margin: 0 0 1.2rem 0;
+      margin: 0 0 1.1rem 0;
     }
 
     .project-card-desc {
-      font-size: 1.2rem;
-      line-height: 1.7;
+      font-size: 1.35rem;
+      line-height: 1.65;
       color: #ccc;
       margin: 0;
     }
@@ -248,7 +305,7 @@ What are you doing here?! you sneaky developer...
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-top: 1.5rem;
+      margin-top: 1.4rem;
     }
     .skill-chip {
       display: inline-flex;
@@ -256,22 +313,23 @@ What are you doing here?! you sneaky developer...
       background: rgba(139, 92, 246, 0.18);
       border: 1px solid rgba(139, 92, 246, 0.55);
       color: #c9b6ff;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.02em;
-      padding: 0.4rem 0.9rem;
+      padding: 0.45rem 1rem;
       border-radius: 999px;
     }
 
     @media (max-width: 768px) {
-      .project-card-title { font-size: 1.6rem; }
-      .project-card-desc { font-size: 1.05rem; }
+      .project-card-title { font-size: 1.7rem; }
+      .project-card-desc { font-size: 1.1rem; }
+      .skill-chip { font-size: 0.85rem; }
     }
 
     @media (max-width: 768px) {
       .project-card { flex-direction: column; min-height: unset; }
       .project-card-media, .project-card-body { width: 100%; }
-      .project-card-media { height: 260px; }
+      .project-card-media { height: 240px; }
       .project-card-body { padding: 1.75rem; }
     }
 
@@ -293,30 +351,30 @@ What are you doing here?! you sneaky developer...
     }
     .gallery-dot.active { background: #fff; }
 
-    /* documentation / PDF links */
-    .project-modal-documents { margin-top: 1.75rem; }
+    /* documentation / PDF links — sized to feel as prominent as the photos */
+    .project-modal-documents { margin-top: 2rem; }
     .project-modal-documents h4 {
-      margin-bottom: 0.9rem;
-      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
       color: #fff;
     }
     .document-link {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       color: #fff;
-      padding: 0.9rem 1.25rem;
-      border-radius: 8px;
+      padding: 1.1rem 1.6rem;
+      border-radius: 10px;
       text-decoration: none;
-      margin-bottom: 0.6rem;
-      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.15rem;
       font-weight: 600;
       width: fit-content;
       transition: background 0.2s ease, border-color 0.2s ease;
     }
-    .document-link::before { content: "📄"; font-size: 1.3rem; }
+    .document-link::before { content: "📄"; font-size: 1.6rem; }
     .document-link:hover {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.4);
@@ -558,8 +616,11 @@ What are you doing here?! you sneaky developer...
         </div>
         <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('cubesat')" tabindex="0" role="button" aria-label="View CubeSat Z-axis mechanism project details">
           <div class="project-card">
+            <span class="project-status-badge in-progress">In Progress</span>
             <div class="project-card-media">
               <img src="src/jpg/bluesat-zaxis.jpg" alt="CubeSat Z-axis mechanism preview" class="project-card-img" id="thumb-cubesat" />
+              <button class="card-nav card-nav-prev" onclick="openProjectModalFromCard(event, 'cubesat')" aria-label="View CubeSat gallery and documentation">&#8592;</button>
+              <button class="card-nav card-nav-next" onclick="openProjectModalFromCard(event, 'cubesat')" aria-label="View CubeSat gallery and documentation">&#8594;</button>
               <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
             <div class="project-card-body">
@@ -579,8 +640,11 @@ What are you doing here?! you sneaky developer...
 
         <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('exoskeleton')" tabindex="0" role="button" aria-label="View ATFL ankle exoskeleton project details">
           <div class="project-card">
+            <span class="project-status-badge in-progress">In Progress</span>
             <div class="project-card-media">
               <img src="src/webp/atfl-exoskeleton.webp" alt="ATFL ankle exoskeleton preview" class="project-card-img" id="thumb-exoskeleton" />
+              <button class="card-nav card-nav-prev" onclick="openProjectModalFromCard(event, 'exoskeleton')" aria-label="View exoskeleton gallery and documentation">&#8592;</button>
+              <button class="card-nav card-nav-next" onclick="openProjectModalFromCard(event, 'exoskeleton')" aria-label="View exoskeleton gallery and documentation">&#8594;</button>
               <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
             <div class="project-card-body">
@@ -600,8 +664,11 @@ What are you doing here?! you sneaky developer...
 
         <div data-aos="fade-up" class="project-tile" onclick="openProjectModal('rover')" tabindex="0" role="button" aria-label="View autonomous fire-detection rover project details">
           <div class="project-card">
+            <span class="project-status-badge in-progress">In Progress</span>
             <div class="project-card-media">
               <img src="src/png/fire-rover.png" alt="Autonomous fire-detection rover preview" class="project-card-img" id="thumb-rover" />
+              <button class="card-nav card-nav-prev" onclick="openProjectModalFromCard(event, 'rover')" aria-label="View rover gallery and documentation">&#8592;</button>
+              <button class="card-nav card-nav-next" onclick="openProjectModalFromCard(event, 'rover')" aria-label="View rover gallery and documentation">&#8594;</button>
               <div class="project-card-hint">📂 View gallery &amp; docs</div>
             </div>
             <div class="project-card-body">
@@ -757,6 +824,14 @@ What are you doing here?! you sneaky developer...
       renderDocuments(project);
       document.getElementById("projectModalOverlay").classList.add("active");
       document.body.style.overflow = "hidden";
+    }
+
+    // Used by the arrow buttons on the card itself — stops the click from
+    // also bubbling up to the card's own onclick (which would just call
+    // openProjectModal a second time) and opens the same modal.
+    function openProjectModalFromCard(event, projectId) {
+      event.stopPropagation();
+      openProjectModal(projectId);
     }
 
     function closeProjectModal() {
